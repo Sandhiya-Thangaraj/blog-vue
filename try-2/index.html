@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Image Gallery</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div id="app">
+        <div class="gallery-container">
+            <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search images..."
+                class="search-input"
+            />
+            <input
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                multiple
+                class="file-input"
+                @change="handleFileUpload"
+            />
+            <div class="gallery-grid">
+                <div
+                    v-for="image in filteredImages"
+                    :key="image.id"
+                    class="gallery-item"
+                >
+                    <img :src="image.src" :alt="image.title" @click="openModal(image)" />
+                    <button class="delete-button" @click="deleteImage(image.id)">Delete</button>
+                </div>
+            </div>
+            <div v-if="showModal" class="modal-overlay" @click="closeModal">
+                <div class="modal-content" @click.stop>
+                    <span class="close-button" @click="closeModal">&times;</span>
+                    <img :src="selectedImage.src" :alt="selectedImage.title" />
+                    <p>{{ selectedImage.title }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="scripts1.js"></script>
+</body>
+</html>
